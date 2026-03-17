@@ -57,11 +57,11 @@ export default function ImagingPricingPage() {
   const [saving, setSaving] = useState(false);
 
   const [formData, setFormData] = useState({
-    code_examen: "",
-    nom_examen: "",
-    type_examen: "Radiographie",
-    prix: "",
-    description: "",
+    code_examen: "" as string,
+    nom_examen: "" as string,
+    type_examen: "Radiographie" as string,
+    prix: "" as string,
+    description: "" as string,
   });
 
   const fetchExams = useCallback(async () => {
@@ -299,8 +299,8 @@ export default function ImagingPricingPage() {
               <div className="space-y-2">
                 <Label>Type d'examen</Label>
                 <Select 
-                  value={formData.type_examen} 
-                  onValueChange={(v) => setFormData({ ...formData, type_examen: v })}
+                  value={formData.type_examen || "Radiographie"} 
+                  onValueChange={(v) => v && setFormData({ ...formData, type_examen: v })}
                 >
                   <SelectTrigger>
                     <SelectValue />

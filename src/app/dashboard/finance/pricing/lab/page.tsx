@@ -57,11 +57,11 @@ export default function LabPricingPage() {
   const [saving, setSaving] = useState(false);
 
   const [formData, setFormData] = useState({
-    code_analyse: "",
-    nom_analyse: "",
-    categorie: "Biochimie",
-    prix: "",
-    description: "",
+    code_analyse: "" as string,
+    nom_analyse: "" as string,
+    categorie: "Biochimie" as string,
+    prix: "" as string,
+    description: "" as string,
   });
 
   const fetchTests = useCallback(async () => {
@@ -299,8 +299,8 @@ export default function LabPricingPage() {
               <div className="space-y-2">
                 <Label>Catégorie</Label>
                 <Select 
-                  value={formData.categorie} 
-                  onValueChange={(v) => setFormData({ ...formData, categorie: v })}
+                  value={formData.categorie || "Biochimie"} 
+                  onValueChange={(v) => v && setFormData({ ...formData, categorie: v })}
                 >
                   <SelectTrigger>
                     <SelectValue />

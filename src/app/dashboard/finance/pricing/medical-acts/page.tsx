@@ -63,12 +63,12 @@ export default function MedicalActsPage() {
 
   // Form State
   const [formData, setFormData] = useState({
-    code_acte: "",
-    nom_acte: "",
-    categorie: "Consultation",
-    service: "Général",
-    prix: "",
-    description: "",
+    code_acte: "" as string,
+    nom_acte: "" as string,
+    categorie: "Consultation" as string,
+    service: "Général" as string,
+    prix: "" as string,
+    description: "" as string,
   });
 
   const fetchServices = useCallback(async () => {
@@ -333,8 +333,8 @@ export default function MedicalActsPage() {
                 <div className="space-y-2">
                   <Label>Catégorie</Label>
                   <Select 
-                    value={formData.categorie} 
-                    onValueChange={(v) => setFormData({ ...formData, categorie: v })}
+                    value={formData.categorie || "Consultation"} 
+                    onValueChange={(v) => v && setFormData({ ...formData, categorie: v })}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Catégorie" />
