@@ -33,7 +33,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 const formSchema = z.object({
   patient_id: z.string().min(1, "Le patient est requis"),
   test_type: z.string().min(2, "Le type d'analyse est requis"),
-  urgent: z.boolean().default(false),
+  urgent: z.boolean(),
 });
 
 export function CreateLabRequestModal({ onCreated }: { onCreated: () => void }) {

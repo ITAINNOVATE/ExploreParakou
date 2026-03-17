@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Suspense } from "react";
 import { 
   Card, 
   CardContent, 
@@ -25,7 +25,7 @@ import { fr } from "date-fns/locale";
 import { Badge } from "@/components/ui/badge";
 import { useSearchParams } from "next/navigation";
 
-export default function ConsultationsPage() {
+function ConsultationsContent() {
   const searchParams = useSearchParams();
   const [search, setSearch] = useState("");
   const [consultations, setConsultations] = useState<any[]>([]);
@@ -188,5 +188,17 @@ export default function ConsultationsPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function ConsultationsPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-[400px]">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    }>
+      <ConsultationsContent />
+    </Suspense>
   );
 }

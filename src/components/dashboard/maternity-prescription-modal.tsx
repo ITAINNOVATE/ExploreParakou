@@ -47,13 +47,13 @@ const labSchema = z.object({
 const formSchema = z.object({
   pregnancy_id: z.string().min(1, "Dossier requis"),
   type: z.enum(["medication", "laboratory", "hospitalization"]),
-  medications: z.array(medicationSchema).default([]),
-  lab_tests: z.array(labSchema).default([]),
+  medications: z.array(medicationSchema),
+  lab_tests: z.array(labSchema),
   hospitalization_details: z.object({
-    reason: z.string().default(""),
-    expected_duration: z.string().default(""),
-    urgency: z.enum(["normal", "urgent"]).default("normal"),
-  }).default({ reason: "", expected_duration: "", urgency: "normal" }),
+    reason: z.string(),
+    expected_duration: z.string(),
+    urgency: z.enum(["normal", "urgent"]),
+  }),
 });
 
 type FormValues = z.infer<typeof formSchema>;

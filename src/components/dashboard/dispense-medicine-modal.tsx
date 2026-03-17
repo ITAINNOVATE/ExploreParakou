@@ -40,8 +40,33 @@ const formSchema = z.object({
   patient_id: z.string().optional(),
 });
 
-export function DispenseMedicineModal({ onCreated }: { onCreated: () => void }) {
-  const [open, setOpen] = useState(false);
+export function DispenseMedicineModal({ 
+  onCreated,
+  isOpen: externalOpen,
+  onOpenChange: externalOnOpenChange,
+  onDispensed,
+}: { 
+  onCreated?: () => void;
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  onDispensed?: () => void;
+}) {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const isControlled = externalOpen !== undefined;
+  const open = isControlled ? externalOpen : internalOpen;
+  const setOpen = (val: boolean) => {
+    if (isControlled) {
+      externalOnOpenChange?.(val);
+    } else {
+      setInternalOpen(val);
+    }
+  };
+  
+  const handleCreated = () => {
+    onCreated?.();
+    onDispensed?.();
+  };
+
   const [loading, setLoading] = useState(false);
   const [patients, setPatients] = useState<any[]>([]);
   const [medicines, setMedicines] = useState<any[]>([]);
@@ -162,7 +187,7 @@ export function DispenseMedicineModal({ onCreated }: { onCreated: () => void }) 
       setOpen(false);
       setCart([]);
       form.reset();
-      onCreated();
+      handleCreated();
     } catch (error: any) {
       toast.error("Erreur: " + error.message);
     } finally {
@@ -180,12 +205,14 @@ export function DispenseMedicineModal({ onCreated }: { onCreated: () => void }) 
         setOpen(newOpen);
       }}
     >
-      <DialogTrigger render={
-        <Button className="gap-2 shadow-lg shadow-indigo-200 bg-indigo-600 hover:bg-indigo-700 text-white">
-          <ShoppingCart className="h-4 w-4" />
-          Nouvelle Vente / Dispense
-        </Button>
-      } />
+      {!isControlled && (
+        <DialogTrigger render={
+          <Button className="gap-2 shadow-lg shadow-indigo-200 bg-indigo-600 hover:bg-indigo-700 text-white">
+            <ShoppingCart className="h-4 w-4" />
+            Nouvelle Vente / Dispense
+          </Button>
+        } />
+      )}
       <DialogContent className="sm:max-w-[650px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Délivrance de Médicaments</DialogTitle>

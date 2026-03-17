@@ -1424,7 +1424,7 @@ export function CreateConsultationModal({ onConsultationCreated, initialData, re
                                         const med = availableMedicines.find(m => m.id === val);
                                         updateMedication(index, { 
                                           ...form.getValues().medications[index], 
-                                          medicine_id: val, 
+                                          medicine_id: val || undefined, 
                                           name: med?.name || "" 
                                         });
                                       }}
