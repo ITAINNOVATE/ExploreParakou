@@ -1,4 +1,6 @@
 "use client";
+// Vercel build fix - Force redeploy
+
 
 import { useState, useEffect, useCallback } from "react";
 import { Plus, Search, Edit, Trash2, Camera, Loader2 } from "lucide-react";
